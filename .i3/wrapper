@@ -1,0 +1,3 @@
+#!/bin/bash
+exec ~/.i3/compile
+exec /usr/bin/i3
