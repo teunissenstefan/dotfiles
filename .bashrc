@@ -142,3 +142,5 @@ ex ()
 
 export PATH=$HOME/.config/composer/vendor/bin:$PATH
 export PATH=$HOME/repos/scripts:$PATH
+
+source /usr/share/doc/pkgfile/command-not-found.bash

@@ -4,6 +4,8 @@
 assign [class="Brave-browser" title="\b(\w*WhatsApp\w*)\b"] $ws7
 for_window [class="Brave-browser" title="\b(\w*WhatsApp\w*)\b"] move to workspace $ws7
 
+for_window [class="Checkers"] floating enable
+
 # Start bookmenu launcher by Brodie Robertson
 bindsym $mod+b exec --no-startup-id bookmenu
 
@@ -28,6 +30,8 @@ set $ws7 "7:7 "
 set $ws8 "8:8 "
 set $ws9 "9:9 "
 set $ws10 "10:10 "
+set $ws11 "11:11"
+set $ws12 "12:12"
 
 set $mon_mid	"HDMI1"
 set $mon_main	"DVI-D-0"
@@ -43,3 +47,4 @@ workspace $ws10 output $mon_mid
 # Executions
 exec --no-startup-id steam
 exec --no-startup-id razercommander -q
+exec --no-startup-id antimicroX --hidden

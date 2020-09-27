@@ -31,6 +31,7 @@ bindsym $mod+Return exec terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym $mod+Shift+s exec "~/repos/scripts/restart_steam.sh"
 
 # start program launcher
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
@@ -61,9 +62,9 @@ bindsym $mod+Ctrl+m exec pavucontrol
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym $mod+t exec --no-startup-id pkill picom
+bindsym $mod+Ctrl+t exec --no-startup-id picom -b
+bindsym $mod+Shift+d --release exec "~/repos/scripts/restart_dunst.sh"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # focus_follows_mouse no
@@ -93,7 +94,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # workspace back and forth (with/without active container)
-workspace_auto_back_and_forth yes
+#workspace_auto_back_and_forth yes
 #bindsym $mod+b workspace back_and_forth
 #bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
@@ -117,17 +118,17 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # toggle sticky
-bindsym $mod+Shift+s sticky toggle
+#bindsym $mod+Shift+s sticky toggle
 
 # focus the parent container
 #bindsym $mod+a focus parent
 
 # move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move scratchpad
+#bindsym $mod+Shift+minus move scratchpad
 
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
+#bindsym $mod+minus scratchpad show
 
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
@@ -154,6 +155,10 @@ bindsym $mod+9 workspace $ws9
 bindsym $mod+Mod2+KP_9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 bindsym $mod+Mod2+KP_0 workspace $ws10
+bindsym $mod+minus workspace $ws11
+bindsym $mod+Mod2+KP_Subtract workspace $ws11
+bindsym $mod+equal workspace $ws12
+bindsym $mod+Mod2+KP_Add workspace $ws12
 
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -176,6 +181,10 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+Mod2+KP_Prior move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+Mod2+KP_Insert move container to workspace $ws10
+bindsym $mod+Shift+minus move container to workspace $ws11
+bindsym $mod+Shift+Mod2+KP_Subtract move container to workspace $ws11
+bindsym $mod+Shift+equal move container to workspace $ws12
+bindsym $mod+Shift+Mod2+KP_Add move container to workspace $ws12
 
 # Move to workspace with focused container
 #bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
@@ -208,6 +217,9 @@ assign [class="Nautilus"] $ws9
 assign [class="Nemo"] $ws9
 assign [class="Google Play Music Desktop Player"] $ws10
 assign [instance="Spotify"] $ws10
+assign [title="blackwindow-0-nice"] $ws2
+assign [title="blackwindow-1-nice"] $ws10
+assign [title="blackwindow-2-nice"] $ws1
 for_window [class="Spotify"] move to workspace $ws10
 for_window [class="jetbrains-phpstorm"] move to workspace $ws2
 for_window [class="jetbrains-idea"] move to workspace $ws2
@@ -219,6 +231,8 @@ exec --no-startup-id spotify
 exec --no-startup-id nemo
 exec --no-startup-id variety
 exec --no-startup-id /usr/lib/kdeconnectd
+exec --no-startup-id "~/repos/scripts/webcam/init.sh"
+exec --no-startup-id dunst
 
 for_window [title="rterm"] floating enable
 for_window [title="rterm"] move scratchpad
@@ -264,6 +278,7 @@ for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
 for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
 for_window [title="^Steam Keyboard$"] floating enable
 for_window [instance="origin.exe"] floating enable
+for_window [title="Microsoft Teams Notification"] floating enable
 
 # switch to workspace with urgent window automatically
 #for_window [urgent=latest] focus
@@ -342,7 +357,7 @@ exec --no-startup-id numlockx on
 exec --no-startup-id xinput --set-prop 16 182 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
 exec --no-startup-id ~/.screenlayout/layout.sh
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+exec --no-startup-id nitrogen --restore; sleep 1; picom -b
 exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
