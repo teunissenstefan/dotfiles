@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+# Copyright (C) 2021 Stefan Teunissen<stefanteunissen1@gmail.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#!/bin/bash
+
+do_check() {
+	for evt in "${events[@]}"
+	do
+		# turn event[i] into
+		# array ['christmas', '2021/12/25']
+		IFS=";" read -r -a arr <<< "${evt}"
+
+		event="${arr[0]}"
+		date="${1}/${arr[1]}"
+		evtDate=$(date -d $date +%s)
+		nowDate=$(date +%s)
+		curDays=$((($evtDate-$nowDate)/86400))
+
+		if [ "$curDays" -lt "$minDays" ] && [ "$curDays" -gt -1 ] ; then
+		    minDays=$curDays
+		    minEvent=$event	
+		fi
+	done
+}
+
+declare -a events
+
+year=$(date +"%Y")
+
+events[0]='Kerstmis;12/25'
+events[1]='Sinterklaas;12/05'
+events[2]='mijn verjaardag;06/24'
+events[3]='verjaardag Thamires;10/09'
+events[4]='verjaardag Mam;10/02'
+events[5]='verjaardag San;11/13'
+events[6]='verjaardag Marcos;08/31'
+events[6]='verjaardag Martonia;02/12'
+
+minDays=1337
+minEvent="nice"
+do_check $year
+if [ "$minDays" -eq 1337 ] ; then
+	do_check $(($year+1))
+fi
+echo "${minDays} dagen tot ${minEvent}"
