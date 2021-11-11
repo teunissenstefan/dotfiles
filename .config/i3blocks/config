@@ -30,9 +30,14 @@ command=$SCRIPT_DIR/$BLOCK_NAME/$BLOCK_NAME
 separator_block_width=15
 markup=none
 
+# Next-Event
+#
+# see the script for details.
+[next-event]
+interval=86400
+
 # Crypto-ticker
 #
-# The script may be called with -w and -c switches to specify thresholds,
 # see the script for details.
 [crypto-ticker]
 label=BTC 
