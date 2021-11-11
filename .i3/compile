@@ -1,3 +1,0 @@
-#!/bin/bash
-cat $HOME/.i3/config.base \
-    $HOME/.i3/add_desktop > $HOME/.i3/config

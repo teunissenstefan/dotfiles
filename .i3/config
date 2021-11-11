@@ -27,7 +27,7 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -38,8 +38,14 @@ bindsym $mod+Shift+s exec "~/repos/scripts/restart_steam.sh"
 # For use with the dmenu-manjaro package
 bindsym $mod+d exec --no-startup-id dmenu_recency
 
-# start dmenu-emoji
+# start dmenu-emoji-picker
 bindsym $mod+period exec --no-startup-id dmenu-emoji-picker
+
+# start dmenu-abbr-picker
+bindsym $mod+comma exec --no-startup-id dmenu-abbr-picker
+
+# mapper
+bindsym $mod+Shift+m exec --no-startup-id mapper
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -63,17 +69,17 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+t exec --no-startup-id pkill picom
-bindsym $mod+Ctrl+t exec --no-startup-id picom -b
+bindsym $mod+Ctrl+t exec --no-startup-id picom --experimental-backend  --backend glx -b
 bindsym $mod+Shift+d --release exec "~/repos/scripts/restart_dunst.sh"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # focus_follows_mouse no
 
 # change focus
-#bindsym $mod+j focus left
-#bindsym $mod+k focus down
-#bindsym $mod+l focus up
-#bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -82,10 +88,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-#bindsym $mod+Shift+j move left
-#bindsym $mod+Shift+k move down
-#bindsym $mod+Shift+l move up
-#bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -99,7 +105,7 @@ bindsym $mod+Shift+Right move right
 #bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+h split h;exec notify-send 'tile horizontally'
+bindsym $mod+e split h;exec notify-send 'tile horizontally'
 bindsym $mod+v split v;exec notify-send 'tile vertically'
 bindsym $mod+q split toggle
 
@@ -159,6 +165,8 @@ bindsym $mod+minus workspace $ws11
 bindsym $mod+Mod2+KP_Subtract workspace $ws11
 bindsym $mod+equal workspace $ws12
 bindsym $mod+Mod2+KP_Add workspace $ws12
+bindsym $mod+F1 workspace $ws13
+bindsym $mod+F2 workspace $ws14
 
 # Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -185,6 +193,8 @@ bindsym $mod+Shift+minus move container to workspace $ws11
 bindsym $mod+Shift+Mod2+KP_Subtract move container to workspace $ws11
 bindsym $mod+Shift+equal move container to workspace $ws12
 bindsym $mod+Shift+Mod2+KP_Add move container to workspace $ws12
+bindsym $mod+Shift+F1 move container to workspace $ws13
+bindsym $mod+Shift+F2 move container to workspace $ws14
 
 # Move to workspace with focused container
 #bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
@@ -203,36 +213,50 @@ bindsym $mod+Shift+Mod2+KP_Add move container to workspace $ws12
 # assign [class="Pale moon"] $ws2
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
-assign [class="Brave-browser"] $ws1
+#assign [class="Brave-browser"] $ws1
+assign [class="Brave-browser" title="\b(\w*Gmail - Brave\w*)\b"] $ws1
+for_window [class="Brave-browser" title="\b(\w*Gmail - Brave\w*)\b"] move to workspace $ws1
 assign [class="Code"] $ws2
 assign [class="code"] $ws2
 assign [class="Atom"] $ws2
 assign [class="jetbrains-phpstorm"] $ws2
 assign [class="jetbrains-idea"] $ws2
+assign [class="jetbrains-clion"] $ws2
 assign [class="Min"] $ws7
 assign [instance="Steam"] $ws8
 assign [title="Steam"] $ws8
 assign [class="Zenity"] $ws8
 assign [class="Nautilus"] $ws9
+assign [title="ranger_alacritty"] $ws9
 assign [class="Nemo"] $ws9
 assign [class="Google Play Music Desktop Player"] $ws10
 assign [instance="Spotify"] $ws10
+assign [title="ncspot_alacritty"] $ws10
+assign [title="newsboat_alacritty"] $ws10
 assign [title="blackwindow-0-nice"] $ws2
 assign [title="blackwindow-1-nice"] $ws10
 assign [title="blackwindow-2-nice"] $ws1
 for_window [class="Spotify"] move to workspace $ws10
 for_window [class="jetbrains-phpstorm"] move to workspace $ws2
 for_window [class="jetbrains-idea"] move to workspace $ws2
+for_window [class="jetbrains-clion"] move to workspace $ws2
 
 bindsym $mod+a [title="rterm"] scratchpad show; [title="rterm"] move position center
 
+# start ftpd server (voor print files naar te sturen)
+exec --no-startup-id ftpd
 exec --no-startup-id brave
-exec --no-startup-id spotify
-exec --no-startup-id nemo
+#exec --no-startup-id spotify
+exec --no-startup-id "alacritty -t 'ranger_alacritty' -e 'ranger' ~"
+exec --no-startup-id "alacritty -t 'newsboat_alacritty' -e 'newsboat'"
+exec --no-startup-id "alacritty -t 'ncspot_alacritty' -e 'ncspot'"
+#exec --no-startup-id nemo
 exec --no-startup-id variety
 exec --no-startup-id /usr/lib/kdeconnectd
 exec --no-startup-id "~/repos/scripts/webcam/init.sh"
 exec --no-startup-id dunst
+exec --no-startup-id aw-qt
+exec --no-startup-id "systemctl --user enable --now replay-sorcery"
 
 for_window [title="rterm"] floating enable
 for_window [title="rterm"] move scratchpad
@@ -293,10 +317,10 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 #player control
-bindsym XF86AudioPlay exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-#bindsym XF86AudioPause exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause"
-bindsym XF86AudioNext exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-bindsym XF86AudioPrev exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+bindsym XF86AudioPlay exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause; dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+#bindsym XF86AudioPause exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause; dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause"
+bindsym XF86AudioNext exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next; dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+bindsym XF86AudioPrev exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous; dbus-send --print-reply --dest=org.mpris.MediaPlayer2.ncspot /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% #increase sound volume
@@ -332,10 +356,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -349,15 +373,18 @@ mode "resize" {
 }
 
 # Lock screen
-bindsym $mod+l exec --no-startup-id blurlock
+#bindsym $mod+l exec --no-startup-id blurlock
 
 # Autostart applications
 #exec --no-startup-id ~/.screenlayout/layout.sh
+exec_always --no-startup-id setxkbmap -option compose:ralt
+exec_always --no-startup-id setxkbmap -option compose:paus
 exec --no-startup-id numlockx on
+exec --no-startup-id xbindkeys
 exec --no-startup-id xinput --set-prop 16 182 1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
 exec --no-startup-id ~/.screenlayout/layout.sh
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; sleep 1; picom --experimental-backend  --backend glx -b
 exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
@@ -405,7 +432,7 @@ set_from_resource $term_color15    color15
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
 	i3bar_command i3bar
-	status_command i3status
+	status_command i3blocks
 	position bottom
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
@@ -516,7 +543,7 @@ bindsym Print exec "~/repos/scripts/scrot/full.sh"
 bindsym --release Shift+Print exec "~/repos/scripts/scrot/selection.sh"
 
 # Nightlock
-bindsym $mod+Shift+l exec --no-startup-id nightlock
+bindsym $mod+Control+l exec --no-startup-id nightlock
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -534,17 +561,20 @@ set $ws9 "9:9 "
 set $ws10 "10:10 "
 set $ws11 "11:11"
 set $ws12 "12:12"
+set $ws13 "13:13"
+set $ws14 "14:14"
 
-set $mon_mid	"HDMI1"
-set $mon_main	"DVI-D-0"
-set $mon_left	"VGA1"
+set $mon_mid	"HDMI-1-1"
+set $mon_left	"VGA-1-1"
+set $mon_up	"DVI-D-0"
+set $mon_main	"DVI-D-1"
 
 workspace $ws1 output $mon_left
 workspace $ws2 output $mon_main
 workspace $ws7 output $mon_mid
 workspace $ws8 output $mon_main
 workspace $ws9 output $mon_main
-workspace $ws10 output $mon_mid
+workspace $ws10 output $mon_up
 
 # Executions
 exec --no-startup-id steam
