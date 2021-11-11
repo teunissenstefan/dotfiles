@@ -27,7 +27,7 @@ do_check() {
 		date="${1}/${arr[1]}"
 		evtDate=$(date -d $date +%s)
 		nowDate=$(date +%s)
-		curDays=$((($evtDate-$nowDate)/86400))
+		curDays=$(echo "${evtDate} ${nowDate}" | awk '{print ($1-$2)/86400}' | awk '{print ($0-int($0)>0)?int($0)+1:int($0)}')
 
 		if [ "$curDays" -lt "$minDays" ] && [ "$curDays" -gt -1 ] ; then
 		    minDays=$curDays
