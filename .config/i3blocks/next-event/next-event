@@ -36,6 +36,13 @@ do_check() {
 	done
 }
 
+dag_or_dagen() {
+	dagen=$1
+	if [ "$dagen" -eq 1 ] ; then
+		dagenStr="dag"
+	fi
+}
+
 declare -a events
 
 year=$(date +"%Y")
@@ -55,4 +62,6 @@ do_check $year
 if [ "$minDays" -eq 1337 ] ; then
 	do_check $(($year+1))
 fi
-echo "${minDays} dagen tot ${minEvent}"
+dagenStr="dagen"
+dag_or_dagen $minDays
+echo "${minDays} ${dagenStr} tot ${minEvent}"
