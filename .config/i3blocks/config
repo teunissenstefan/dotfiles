@@ -30,6 +30,10 @@ command=$SCRIPT_DIR/$BLOCK_NAME/$BLOCK_NAME
 separator_block_width=15
 markup=none
 
+# ncspot
+[ncspot]
+interval=1
+
 # Next-Event
 #
 # see the script for details.
