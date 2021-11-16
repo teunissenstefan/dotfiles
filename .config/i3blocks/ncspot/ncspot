@@ -16,6 +16,6 @@
 
 #!/bin/bash
 
-ARTIST=$(playerctl metadata | grep -i artist | awk '{$1="";$2=""; gsub(/^[ \t]+|[ \t]+$/, ""); print }' | head -1)
-SONG=$(playerctl metadata | grep -i title | awk '{$1="";$2=""; gsub(/^[ \t]+|[ \t]+$/, ""); print }' | head -1)
+ARTIST=$(playerctl metadata | grep artist | awk '{$1="";$2=""; gsub(/^[ \t]+|[ \t]+$/, ""); print }' | head -1)
+SONG=$(playerctl metadata | grep title | awk '{$1="";$2=""; gsub(/^[ \t]+|[ \t]+$/, ""); print }' | head -1)
 echo "${ARTIST} - ${SONG}"
